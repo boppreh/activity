@@ -115,6 +115,8 @@ def start():
 if __name__ == "__main__":
     from background import tray
     tray('Watcher Daemon', 'report.ico')
+    from simpleserver import serve
+    serve(locals(), port=2342)
 
     try:
         start()
