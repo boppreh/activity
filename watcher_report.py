@@ -128,7 +128,10 @@ def get_summary(start, end):
     counters_by_day = list(get_date_period_counters(start, end))
     summed_counters = sum(counters_by_day, Counter())
 
-    time_multiplier = float(watcher_daemon.INTERVAL) / len(counters_by_day)
+    if counters_by_day:
+        time_multiplier = float(watcher_daemon.INTERVAL) / len(counters_by_day)
+    else:
+        time_multiplier = 0
 
     total_title = "Total ({:d} entries)".format(len(summed_counters))
     total_seconds = sum(summed_counters.values()) * time_multiplier
