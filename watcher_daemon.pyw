@@ -79,6 +79,8 @@ def take_screenshot(date, timestamp):
     make_dir(path)
     screenshot.save(os.path.join(path, str(int(timestamp)) + ".png"))
 
+last_windows = []
+
 def start():
     """Start the main loop watching and recording user activity."""
     make_dir(DATA_DIR)
@@ -102,6 +104,10 @@ def start():
         if not window_name:
             continue
 
+        last_windows.append(window_name)
+        if len(last_windows) > 10:
+            last_windows.pop(0)
+
         fields = [str(int(current_time)), str(idle_time), process_name, window_name]
         entry = FIELD_SEPARATOR.join([field for field in fields])
 
@@ -116,7 +122,7 @@ if __name__ == "__main__":
     from background import tray
     tray('Watcher Daemon', 'report.ico')
     from simpleserver import serve
-    serve(locals(), port=2342)
+    serve(last_windows, port=2342)
 
     try:
         start()
