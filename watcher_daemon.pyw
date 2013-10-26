@@ -119,7 +119,7 @@ def start():
         time.sleep(INTERVAL - (time.time() - current_time))
 
 if __name__ == "__main__":
-    from background import tray
+    from tray import tray
     tray('Watcher Daemon', 'report.ico')
     from simpleserver import serve
     serve(last_windows, port=2342)
