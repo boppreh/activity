@@ -1,6 +1,6 @@
 import datetime
 import os
-from itertools import izip_longest
+from itertools import zip_longest
 from collections import Counter
 
 import watcher_daemon
@@ -96,7 +96,7 @@ def get_date_period_counters(start, end):
 
         try:
             with open(watcher_daemon.get_entries_file(date)) as entries:
-                entries = [entry.decode("UTF-8") for entry in entries]
+                entries = [entry for entry in entries]
                 yield get_active_names_counter(entries)
         except IOError:
             # There's nothing recorded on that day.
@@ -150,11 +150,11 @@ def get_summary(start, end):
         
 
 if __name__ == "__main__":
-    print "".join([COLUMN_FORMAT.format(name) for name in PERIODS_NAMES])
-    print ""
+    print("".join([COLUMN_FORMAT.format(name) for name in PERIODS_NAMES]))
+    print("")
 
     summaries = [get_summary(start, end) for start, end in PERIODS]
-    for columns in izip_longest(*summaries, fillvalue=""):
+    for columns in zip_longest(*summaries, fillvalue=""):
         line = ""
 
         for entry in columns:
@@ -165,4 +165,4 @@ if __name__ == "__main__":
             
             line += COLUMN_FORMAT.format(text)
 
-        print line
+        print(line)
