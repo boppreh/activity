@@ -62,7 +62,7 @@ class WindowsInfo:
         if window == 0:
             return (0, 0)
 
-        window_name = win32gui.GetWindowText(window).decode('mbcs').replace("\n", " ")
+        window_name = win32gui.GetWindowText(window).replace("\n", " ")
         
         pid = win32process.GetWindowThreadProcessId(window)[1]
 
@@ -113,7 +113,7 @@ def start():
 
         make_dir(os.path.join(DATA_DIR, get_day_dir(today)))
         with open(get_entries_file(today), "a") as file:
-            file.write(entry.encode("UTF-8") + "\n")
+            file.write(entry + "\n")
 
         # sleep for INTERVAL minus the time we spent committing the entry
         time.sleep(INTERVAL - (time.time() - current_time))
