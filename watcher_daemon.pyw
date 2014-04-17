@@ -73,7 +73,7 @@ class WindowsInfo:
 
 def take_screenshot(date, timestamp):
     """Save a full screenshot of the desktop."""
-    import ImageGrab
+    from PIL import ImageGrab
     screenshot = ImageGrab.grab()
     path = os.path.join(DATA_DIR, get_day_dir(date), SCREENSHOTS_DIR)
     make_dir(path)
@@ -116,7 +116,9 @@ def start():
             file.write(entry + "\n")
 
         # sleep for INTERVAL minus the time we spent committing the entry
-        time.sleep(INTERVAL - (time.time() - current_time))
+        time_to_sleep = INTERVAL - (time.time() - current_time)
+        if time_to_sleep > 0:
+            time.sleep(time_to_sleep)
 
 if __name__ == "__main__":
     from tray import tray
